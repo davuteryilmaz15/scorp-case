@@ -5,6 +5,30 @@ from likeQueries import is_liked
 from postQueries import get_post_list
 from userQueries import get_user
 
+#alternative of merge_posts
+def merge_posts_alternative(list_of_posts):
+    postsSet = set()
+    post_list = []
+    list_len = len(list_of_posts)
+    k = 0 #index of list_of_posts
+    i = 0 #index of list int list_of_posts
+    j = 0 #size of post in list_of_posts
+    while True:
+        j = len(list_of_posts[k])
+
+        post = list_of_posts[k][i]
+        if post.id not in postsSet:
+            postsSet.add(post.id)
+            post_list.append(post)
+
+        i += 1
+        if i == j:
+            k += 1
+            if k == list_len and i == j:
+                break
+            i = 0
+    return sorted(post_list, key=lambda post: (post.created_at, post.id), reverse=True)
+
 def get_posts(user_id, post_ids):
     if len(post_ids) == 0:
         return []
